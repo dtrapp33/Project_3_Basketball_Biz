@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Charts Page</title>
+  <title>Inner Page - Charts Page</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -17,16 +17,27 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('assets', filename='vendor/aos/aos.css') }}">
+  <!-- <link href="assets/vendor/aos/aos.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="{{ url_for('assets', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+  <!-- <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="{{ url_for('assets', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}">
+  <!-- <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="{{ url_for('assets', filename='vendor/boxicons/css/boxicons.min.css') }}">
+  <!-- <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="{{ url_for('assets', filename='vendor/glightbox/css/glightbox.mon.css') }}">
+  <!-- <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="{{ url_for('assets', filename='vendor/remixicon/remixicon.css') }}">
+  <!-- <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="{{ url_for('assets', filename='vendor/swiper/swiper-bundle.min.css') }}">
+  <!-- <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"> -->
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('assets', filename='css/style.css') }}">
+  <!-- <link href="assets/css/style.css" rel="stylesheet"> -->
+
+
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
 
   <!-- =======================================================
   * Template Name: Gp
@@ -51,18 +62,18 @@
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="nav-link scrollto " href="index.html">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">Players</a></li>
-          <li><a class="nav-link scrollto" href="#services">Teams</a></li>
-          <li><a class="nav-link scrollto " href="#portfolio">Top 3</a></li>
+          <li><a class="nav-link scrollto active" href="/hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="/about">Players</a></li>
+          <li><a class="nav-link scrollto" href="/services">Teams</a></li>
+          <li><a class="nav-link scrollto " href="/portfolio">Top 3</a></li>
           <!-- <li><a class="nav-link scrollto" href="#team">About Us</a></li> -->
-          <li class="dropdown"><a href="#"><span>Statistics</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown"><a href="/"><span>Statistics</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="players.html">Players</a></li>
-              <li><a href="teams.html">Teams</a></li> 
-              <li><a href="charts.html">Charts</a></li>
-              <li><a href="mapping.html">Mapping</a></li>
-              <li><a href="resources.html">Resources</a></li>
+              <li><a href="/players.html">Players</a></li>
+              <li><a href="/teams.html">Teams</a></li> 
+              <li><a href="/charts.html">Charts</a></li>
+              <li><a href="/mapping.html">Mapping</a></li>
+              <li><a href="/resources.html">Resources</a></li>
             </ul>
           </li>
           <!-- <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
@@ -86,7 +97,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2>Charts</h2>
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="/index.html">Home</a></li>
             <li>Charts</li>
           </ol>
         </div>
@@ -103,8 +114,8 @@
 
     <section class="chart-section">
       <div class="container">
-        <h2>Line Chart</h2>
-        <canvas id="lineChart" style="max-width: 600px;"></canvas>
+        <h2>Horizontal Bar Chart</h2>
+        <div id="barChart" style="max-width: 600px; height: 700px;"></div>
       </div>
     </section>
 
@@ -149,7 +160,41 @@
 
 
   <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+  <script src="{{ url_for('assets', filename='js/main.js') }}"></script>
+  <!-- <script src="assets/js/main.js"></script> -->
+
+
+  <script>
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      // Set Data
+      const data = google.visualization.arrayToDataTable([
+        ['TEAM', 'DEBT VALUE'],
+        ['DENVER NUGGETS', 15],
+        ['MINNESOTA TIMBERWOLVES', 14],
+        ['INDIANA PACERS', 14],
+        ['NEW ORLEANS PELICANS', 14],
+        ['MEMPHIS GRIZZLIES', 22],
+        ['UTAH JAZZ', 15],
+        ['SACRAMENTO KINGS', 28],
+        ['MILWAUKEE BUCKS', 14],
+        ['MIAMI HEAT', 14],
+        ['GOLDEN STATE WARRIORS', 16]
+      ]);
+
+      // Set Options
+      const options = {
+        title: 'TOP 10 TEAMS WITH THE HIGHEST DEBT VALUE',
+      };
+
+      // Draw
+      const chart = new google.visualization.BarChart(document.getElementById('barChart'));
+      chart.draw(data, options);
+    }
+  </script>
+
 
   <script>
     const xValues = ["Phoenix Suns", "Miami Heat", "Washington Wizards", "Philadelphia 76ers", "Toronto Raptors", "Golden State Warriors", "Cleveland Cavaliers"];
@@ -183,32 +228,7 @@
     });
   </script>
 
-  <script>
-    const xLineValues = ["Phoenix Suns", "Miami Heat", "Washington Wizards", "Philadelphia 76ers", "Toronto Raptors", "Golden State Warriors", "Cleveland Cavaliers"];
-    const yLineValues = [10, 20, 15, 25, 30, 22, 18];
   
-    new Chart("lineChart", {
-      type: "line",
-      data: {
-        labels: xLineValues,
-        datasets: [{
-          label: "Monthly Data",
-          borderColor: "blue",
-          backgroundColor: "rgba(0, 0, 255, 0.2)",
-          data: yLineValues
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        title: {
-          display: true,
-          text: "Line Chart Example"
-        }
-      }
-    });
-  </script>
-
   <script>
     const xDoughnutValues = ["Phoenix Suns", "Miami Heat", "Washington Wizards", "Philadelphia 76ers", "Toronto Raptors", "Golden State Warriors", "Cleveland Cavaliers"];
     const yDoughnutValues = [30, 40, 20, 10, 15, 5, 8];
@@ -228,7 +248,7 @@
         maintainAspectRatio: false,
         title: {
           display: true,
-          text: "Doughnut Chart Example"
+          text: "HIGHEST OPERATING INCOME OF 8 TEAMS"
         }
       }
     });
